@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `properties` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `property_id` VARCHAR(50) NOT NULL,
     `name` VARCHAR(100) NOT NULL,
-    `type` ENUM('apartment', 'office', 'gang_hideout', 'shop') NOT NULL,
+    `type` ENUM('apartment', 'office', 'gang_hideout', 'shop', 'warehouse', 'nightclub', 'bar', 'restaurant', 'car_dealership', 'garage', 'motel', 'penthouse', 'mansion', 'bunker', 'mc_clubhouse', 'strip_club', 'casino', 'factory', 'farm', 'hangar', 'dock') NOT NULL,
     `owner_type` ENUM('player', 'organization') DEFAULT NULL,
     `owner_id` VARCHAR(50) DEFAULT NULL,
     `entrance_coords` TEXT NOT NULL,

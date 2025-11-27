@@ -12,7 +12,7 @@
 -- Criminal Activities table
 CREATE TABLE IF NOT EXISTS `criminal_activities` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `activity_type` ENUM('drug', 'weapon', 'loan_shark', 'fraud', 'laundry', 'human_traffic') NOT NULL,
+    `activity_type` ENUM('drug', 'weapon', 'loan_shark', 'fraud', 'laundry', 'human_traffic', 'robbery', 'heist', 'burglary', 'car_theft', 'kidnapping', 'hacking', 'smuggling', 'chop_shop', 'street_racing', 'hitman') NOT NULL,
     `activity_id` VARCHAR(50) NOT NULL,
     `org_id` INT DEFAULT NULL,
     `citizenid` VARCHAR(50) DEFAULT NULL,

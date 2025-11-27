@@ -132,6 +132,7 @@ Config.TerritorySettings = {
 
 -- Territory Zones (PolyZone compatible)
 Config.Territories = {
+    -- Downtown Los Santos
     {
         id = 'little_tokyo',
         name = 'Little Tokyo',
@@ -176,6 +177,285 @@ Config.Territories = {
             maxZ = 80.0
         },
         baseBonus = 1.25
+    },
+    -- Gang Territories
+    {
+        id = 'grove_street',
+        name = 'Grove Street',
+        zone = {
+            points = {
+                vector2(-200.0, -2000.0),
+                vector2(-200.0, -1850.0),
+                vector2(0.0, -1850.0),
+                vector2(0.0, -2000.0)
+            },
+            minZ = 15.0,
+            maxZ = 60.0
+        },
+        baseBonus = 1.3
+    },
+    {
+        id = 'davis',
+        name = 'Davis',
+        zone = {
+            points = {
+                vector2(0.0, -2100.0),
+                vector2(0.0, -1900.0),
+                vector2(200.0, -1900.0),
+                vector2(200.0, -2100.0)
+            },
+            minZ = 15.0,
+            maxZ = 60.0
+        },
+        baseBonus = 1.25
+    },
+    {
+        id = 'rancho',
+        name = 'Rancho',
+        zone = {
+            points = {
+                vector2(200.0, -2100.0),
+                vector2(200.0, -1900.0),
+                vector2(450.0, -1900.0),
+                vector2(450.0, -2100.0)
+            },
+            minZ = 15.0,
+            maxZ = 60.0
+        },
+        baseBonus = 1.2
+    },
+    {
+        id = 'strawberry',
+        name = 'Strawberry',
+        zone = {
+            points = {
+                vector2(0.0, -1200.0),
+                vector2(0.0, -1000.0),
+                vector2(200.0, -1000.0),
+                vector2(200.0, -1200.0)
+            },
+            minZ = 25.0,
+            maxZ = 70.0
+        },
+        baseBonus = 1.15
+    },
+    -- Industrial Areas
+    {
+        id = 'la_mesa',
+        name = 'La Mesa',
+        zone = {
+            points = {
+                vector2(700.0, -2100.0),
+                vector2(700.0, -1800.0),
+                vector2(1100.0, -1800.0),
+                vector2(1100.0, -2100.0)
+            },
+            minZ = 20.0,
+            maxZ = 80.0
+        },
+        baseBonus = 1.1
+    },
+    {
+        id = 'cypress_flats',
+        name = 'Cypress Flats',
+        zone = {
+            points = {
+                vector2(600.0, -1800.0),
+                vector2(600.0, -1600.0),
+                vector2(900.0, -1600.0),
+                vector2(900.0, -1800.0)
+            },
+            minZ = 25.0,
+            maxZ = 60.0
+        },
+        baseBonus = 1.1
+    },
+    {
+        id = 'elysian_island',
+        name = 'Elysian Island',
+        zone = {
+            points = {
+                vector2(-400.0, -2800.0),
+                vector2(-400.0, -2500.0),
+                vector2(0.0, -2500.0),
+                vector2(0.0, -2800.0)
+            },
+            minZ = -5.0,
+            maxZ = 40.0
+        },
+        baseBonus = 1.15
+    },
+    -- Vinewood/Wealthy Areas
+    {
+        id = 'vinewood',
+        name = 'Vinewood',
+        zone = {
+            points = {
+                vector2(0.0, 0.0),
+                vector2(0.0, 400.0),
+                vector2(400.0, 400.0),
+                vector2(400.0, 0.0)
+            },
+            minZ = 50.0,
+            maxZ = 150.0
+        },
+        baseBonus = 1.35
+    },
+    {
+        id = 'vinewood_hills',
+        name = 'Vinewood Hills',
+        zone = {
+            points = {
+                vector2(-200.0, 400.0),
+                vector2(-200.0, 700.0),
+                vector2(200.0, 700.0),
+                vector2(200.0, 400.0)
+            },
+            minZ = 80.0,
+            maxZ = 200.0
+        },
+        baseBonus = 1.4
+    },
+    {
+        id = 'rockford_hills',
+        name = 'Rockford Hills',
+        zone = {
+            points = {
+                vector2(-900.0, 0.0),
+                vector2(-900.0, 300.0),
+                vector2(-600.0, 300.0),
+                vector2(-600.0, 0.0)
+            },
+            minZ = 50.0,
+            maxZ = 120.0
+        },
+        baseBonus = 1.3
+    },
+    -- Beach/Coastal Areas
+    {
+        id = 'del_perro',
+        name = 'Del Perro Beach',
+        zone = {
+            points = {
+                vector2(-1700.0, -1100.0),
+                vector2(-1700.0, -800.0),
+                vector2(-1400.0, -800.0),
+                vector2(-1400.0, -1100.0)
+            },
+            minZ = 0.0,
+            maxZ = 50.0
+        },
+        baseBonus = 1.2
+    },
+    {
+        id = 'vespucci',
+        name = 'Vespucci Beach',
+        zone = {
+            points = {
+                vector2(-1500.0, -1300.0),
+                vector2(-1500.0, -1100.0),
+                vector2(-1200.0, -1100.0),
+                vector2(-1200.0, -1300.0)
+            },
+            minZ = 0.0,
+            maxZ = 40.0
+        },
+        baseBonus = 1.15
+    },
+    -- Sandy Shores / Desert
+    {
+        id = 'sandy_shores',
+        name = 'Sandy Shores',
+        zone = {
+            points = {
+                vector2(1700.0, 3600.0),
+                vector2(1700.0, 3900.0),
+                vector2(2100.0, 3900.0),
+                vector2(2100.0, 3600.0)
+            },
+            minZ = 30.0,
+            maxZ = 60.0
+        },
+        baseBonus = 1.1
+    },
+    {
+        id = 'grapeseed',
+        name = 'Grapeseed',
+        zone = {
+            points = {
+                vector2(1600.0, 4700.0),
+                vector2(1600.0, 5000.0),
+                vector2(2000.0, 5000.0),
+                vector2(2000.0, 4700.0)
+            },
+            minZ = 30.0,
+            maxZ = 80.0
+        },
+        baseBonus = 1.0
+    },
+    -- Paleto Bay
+    {
+        id = 'paleto_bay',
+        name = 'Paleto Bay',
+        zone = {
+            points = {
+                vector2(-300.0, 6200.0),
+                vector2(-300.0, 6500.0),
+                vector2(100.0, 6500.0),
+                vector2(100.0, 6200.0)
+            },
+            minZ = 0.0,
+            maxZ = 50.0
+        },
+        baseBonus = 1.0
+    },
+    -- Mirror Park
+    {
+        id = 'mirror_park',
+        name = 'Mirror Park',
+        zone = {
+            points = {
+                vector2(900.0, -600.0),
+                vector2(900.0, -400.0),
+                vector2(1200.0, -400.0),
+                vector2(1200.0, -600.0)
+            },
+            minZ = 30.0,
+            maxZ = 80.0
+        },
+        baseBonus = 1.15
+    },
+    -- Downtown
+    {
+        id = 'downtown_vinewood',
+        name = 'Downtown Vinewood',
+        zone = {
+            points = {
+                vector2(-500.0, -300.0),
+                vector2(-500.0, 0.0),
+                vector2(-200.0, 0.0),
+                vector2(-200.0, -300.0)
+            },
+            minZ = 30.0,
+            maxZ = 100.0
+        },
+        baseBonus = 1.25
+    },
+    -- Pillbox Hill
+    {
+        id = 'pillbox_hill',
+        name = 'Pillbox Hill',
+        zone = {
+            points = {
+                vector2(0.0, -800.0),
+                vector2(0.0, -600.0),
+                vector2(300.0, -600.0),
+                vector2(300.0, -800.0)
+            },
+            minZ = 25.0,
+            maxZ = 100.0
+        },
+        baseBonus = 1.2
     }
 }
 

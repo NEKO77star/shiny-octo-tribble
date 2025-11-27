@@ -3,7 +3,7 @@ MAD TOWNのような街をFiveM で作成するためのコーディング
 
 ## FiveM QBCore Server - Modern Japan × Mafia Theme
 
-A comprehensive FiveM server implementation featuring a realistic criminal economy with organizations, territories, police/justice system, and everyday life features.
+A comprehensive FiveM server implementation featuring a realistic criminal economy with organizations, territories, police/justice system, and everyday life features. Inspired by VCR GTA roleplay servers.
 
 ### Tech Stack
 - **Framework**: QBCore (Lua)
@@ -29,6 +29,15 @@ Manages organizations (mafia, gangs, companies, shops), members, assets, and ter
 - Territory control and conflicts
 - Activity logging
 
+**Territories** (22 zones):
+- Downtown: Little Tokyo, Entertainment District, Downtown Vinewood, Pillbox Hill
+- Gang Areas: Grove Street, Davis, Rancho, Strawberry
+- Industrial: La Mesa, Cypress Flats, Elysian Island, Port District
+- Wealthy: Vinewood, Vinewood Hills, Rockford Hills
+- Coastal: Del Perro Beach, Vespucci Beach
+- Rural: Sandy Shores, Grapeseed, Paleto Bay
+- Other: Mirror Park
+
 **Database Tables**:
 - `organizations`
 - `organization_members`
@@ -48,8 +57,27 @@ Manages organizations (mafia, gangs, companies, shops), members, assets, and ter
 
 Implements criminal activities with dynamic market pricing based on supply and police confiscations.
 
+**Crime Types** (16 categories):
+| Category | Activities |
+|----------|------------|
+| Drug | Meth Cooking, Weed Harvesting, Cocaine Processing, Heroin Cutting |
+| Weapon | Smuggling, Modification, Ghost Gun Manufacturing |
+| Robbery | Convenience Store, Liquor Store, Jewelry Store, Fleeca Bank |
+| Heist | Pacific Standard, Union Depository, Diamond Casino |
+| Burglary | House, Mansion, Warehouse |
+| Car Theft | Street Cars, Exotic Vehicles, Contract Boosting |
+| Chop Shop | Dismantling, VIN Scratching |
+| Kidnapping | Ransom Operations |
+| Hacking | Crypto Mining, Identity Theft |
+| Smuggling | Boat, Air |
+| Street Racing | Circuit Races, Pink Slip Races |
+| Hitman | Contract Killing |
+| Fraud | ATM Skimming, Credit Card Cloning |
+| Loan Shark | Debt Collection |
+| Laundering | Business Laundering |
+| Protection | Protection Racket |
+
 **Features**:
-- Criminal activities (drug production, weapon smuggling, fraud, laundering)
 - Dynamic market pricing
 - Reward calculation with territory bonuses
 - Organization revenue sharing
@@ -103,17 +131,41 @@ Full investigation, prosecution, and court system for realistic justice roleplay
 
 Everyday life features including properties, insurance, phone, and hobbies.
 
+**Property Types** (21 types):
+| Category | Types |
+|----------|-------|
+| Residential | Apartment, Penthouse, Mansion, Motel |
+| Commercial | Shop, Restaurant, Bar, Car Dealership |
+| Entertainment | Nightclub, Strip Club, Casino |
+| Industrial | Warehouse, Factory, Farm |
+| Organization | Gang Hideout, Bunker, MC Clubhouse |
+| Storage | Garage, Hangar, Dock |
+| Business | Office |
+
+**Properties** (50+ locations):
+- Apartments: Alta St, Eclipse Towers, Del Perro Heights, Integrity Way
+- Penthouses: Diamond Casino, Eclipse Towers
+- Mansions: Richman, Vinewood Hills, Rockford Hills
+- Nightclubs: Downtown, Del Perro, Vinewood
+- Bars: Yellow Jack Inn, Tequi-la-la, Bahama Mamas
+- Restaurants: Burger Shot, Cluckin' Bell, Bean Machine, Little Tokyo Sushi
+- Car Dealerships: Premium Deluxe Motorsport, Simeon's
+- Warehouses: La Mesa, Elysian Island, Cypress Flats
+- And many more...
+
 **Features**:
-- Property system (buy/rent apartments, offices, shops)
+- Property system (buy/rent)
 - Insurance system (vehicle, health, property)
 - Phone UI with apps:
   - Messages (real-time chat)
   - SNS (social network)
+  - SecureChat (encrypted)
   - Bank (accounts and hidden accounts)
+  - Jobs
   - Contacts
   - Settings
 - Legal jobs integration
-- Fishing hobby
+- Hobbies: Fishing, Gambling, Racing
 
 **Database Tables**:
 - `properties`
