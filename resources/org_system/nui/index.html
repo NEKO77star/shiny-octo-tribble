@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app" class="hidden">
+        <div class="org-container">
+            <div class="org-header">
+                <h1 id="org-title">Organization Management</h1>
+                <button class="close-btn" onclick="closeUI()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- No Organization View -->
+            <div id="no-org-view" class="view">
+                <div class="no-org-content">
+                    <i class="fas fa-building fa-4x"></i>
+                    <h2>No Organization</h2>
+                    <p>You are not currently a member of any organization.</p>
+                    <button class="btn btn-primary" onclick="showCreateOrgModal()">
+                        <i class="fas fa-plus"></i> Create Organization
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Organization View -->
+            <div id="org-view" class="view hidden">
+                <div class="tab-bar">
+                    <button class="tab-btn active" data-tab="settings">
+                        <i class="fas fa-cog"></i> Settings
+                    </button>
+                    <button class="tab-btn" data-tab="members">
+                        <i class="fas fa-users"></i> Members
+                    </button>
+                    <button class="tab-btn" data-tab="territories">
+                        <i class="fas fa-map-marked-alt"></i> Territories
+                    </button>
+                    <button class="tab-btn" data-tab="logs">
+                        <i class="fas fa-history"></i> Logs
+                    </button>
+                </div>
+                
+                <!-- Settings Tab -->
+                <div id="settings-tab" class="tab-content active">
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <h3><i class="fas fa-info-circle"></i> Organization Info</h3>
+                            <div class="info-row">
+                                <span>Name:</span>
+                                <span id="org-name">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Type:</span>
+                                <span id="org-type">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Your Role:</span>
+                                <span id="org-role">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-wallet"></i> Treasury</h3>
+                            <div class="treasury-amount" id="treasury-amount">¥0</div>
+                            <div class="treasury-actions">
+                                <button class="btn btn-small" onclick="showAddAssetModal()">
+                                    <i class="fas fa-plus"></i> Add Funds
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-user-secret"></i> Hidden Accounts</h3>
+                            <div id="hidden-accounts-list" class="accounts-list">
+                                <!-- Populated by JS -->
+                            </div>
+                            <button class="btn btn-small btn-secondary" onclick="showCreateHiddenAccountModal()">
+                                <i class="fas fa-plus"></i> Create Account
+                            </button>
+                        </div>
+                        
+                        <div class="settings-card danger-zone" id="boss-controls">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+                            <button class="btn btn-danger" onclick="confirmDisband()">
+                                <i class="fas fa-trash"></i> Disband Organization
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Members Tab -->
+                <div id="members-tab" class="tab-content hidden">
+                    <div class="members-header">
+                        <h3>Members</h3>
+                        <button class="btn btn-primary btn-small" onclick="showInviteModal()" id="invite-btn">
+                            <i class="fas fa-user-plus"></i> Invite
+                        </button>
+                    </div>
+                    <div class="members-list" id="members-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                
+                <!-- Territories Tab -->
+                <div id="territories-tab" class="tab-content hidden">
+                    <div class="territories-header">
+                        <h3>Controlled Territories</h3>
+                    </div>
+                    <div class="territories-list" id="territories-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                
+                <!-- Logs Tab -->
+                <div id="logs-tab" class="tab-content hidden">
+                    <div class="logs-header">
+                        <h3>Activity Logs</h3>
+                        <button class="btn btn-small" onclick="refreshData()">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                    </div>
+                    <div class="logs-list" id="logs-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Organization Modal -->
+    <div id="create-org-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Organization</h2>
+                <button class="close-btn" onclick="closeModal('create-org-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-org-name">Organization Name</label>
+                    <input type="text" id="new-org-name" placeholder="Enter organization name">
+                </div>
+                <div class="form-group">
+                    <label for="new-org-type">Organization Type</label>
+                    <select id="new-org-type">
+                        <option value="mafia">Mafia</option>
+                        <option value="gang">Gang</option>
+                        <option value="company">Company</option>
+                        <option value="store">Store</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('create-org-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="createOrganization()">Create</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Invite Member Modal -->
+    <div id="invite-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Invite Member</h2>
+                <button class="close-btn" onclick="closeModal('invite-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="invite-citizenid">Citizen ID</label>
+                    <input type="text" id="invite-citizenid" placeholder="Enter citizen ID">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('invite-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="inviteMember()">Invite</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Asset Modal -->
+    <div id="add-asset-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Funds to Treasury</h2>
+                <button class="close-btn" onclick="closeModal('add-asset-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="asset-amount">Amount</label>
+                    <input type="number" id="asset-amount" placeholder="Enter amount" min="0">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('add-asset-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="addAsset()">Add Funds</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Hidden Account Modal -->
+    <div id="create-hidden-account-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Hidden Account</h2>
+                <button class="close-btn" onclick="closeModal('create-hidden-account-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="hidden-account-type">Account Type</label>
+                    <select id="hidden-account-type">
+                        <option value="player">Personal</option>
+                        <option value="organization">Organization</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="hidden-account-currency">Currency</label>
+                    <select id="hidden-account-currency">
+                        <option value="yen">Yen (¥)</option>
+                        <option value="crypto">Cryptocurrency (₿)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('create-hidden-account-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="createHiddenAccount()">Create</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Member Actions Modal -->
+    <div id="member-actions-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Member Actions</h2>
+                <button class="close-btn" onclick="closeModal('member-actions-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="member-info">
+                    <span id="selected-member-name">-</span>
+                    <span id="selected-member-role" class="badge">-</span>
+                </div>
+                <div class="form-group">
+                    <label for="member-salary">Salary</label>
+                    <input type="number" id="member-salary" placeholder="Salary amount" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="member-share">Revenue Share (%)</label>
+                    <input type="number" id="member-share" placeholder="Share percentage" min="0" max="100">
+                </div>
+            </div>
+            <div class="modal-footer member-action-btns">
+                <button class="btn btn-success" onclick="promoteMember()" id="promote-btn">
+                    <i class="fas fa-arrow-up"></i> Promote
+                </button>
+                <button class="btn btn-warning" onclick="demoteMember()" id="demote-btn">
+                    <i class="fas fa-arrow-down"></i> Demote
+                </button>
+                <button class="btn btn-danger" onclick="kickMember()" id="kick-btn">
+                    <i class="fas fa-user-minus"></i> Kick
+                </button>
+                <button class="btn btn-primary" onclick="updateCompensation()">
+                    <i class="fas fa-save"></i> Save
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="src/app.js"></script>
+</body>
+</html>

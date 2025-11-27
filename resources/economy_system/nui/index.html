@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criminal Economy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app" class="hidden">
+        <div class="economy-container">
+            <div class="economy-header">
+                <h1><i class="fas fa-skull-crossbones"></i> Criminal Operations</h1>
+                <button class="close-btn" onclick="closeUI()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="tab-bar">
+                <button class="tab-btn active" data-tab="activities">
+                    <i class="fas fa-tasks"></i> Activities
+                </button>
+                <button class="tab-btn" data-tab="market">
+                    <i class="fas fa-chart-line"></i> Market
+                </button>
+                <button class="tab-btn" data-tab="laundry">
+                    <i class="fas fa-money-bill-wave"></i> Laundry
+                </button>
+                <button class="tab-btn" data-tab="stats">
+                    <i class="fas fa-chart-bar"></i> Stats
+                </button>
+            </div>
+            
+            <!-- Activities Tab -->
+            <div id="activities-tab" class="tab-content active">
+                <div class="activities-filter">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="drug">
+                        <i class="fas fa-cannabis"></i> Drugs
+                    </button>
+                    <button class="filter-btn" data-filter="weapon">
+                        <i class="fas fa-gun"></i> Weapons
+                    </button>
+                    <button class="filter-btn" data-filter="fraud">
+                        <i class="fas fa-credit-card"></i> Fraud
+                    </button>
+                </div>
+                
+                <div class="activities-list" id="activities-list">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+            
+            <!-- Market Tab -->
+            <div id="market-tab" class="tab-content hidden">
+                <div class="market-header">
+                    <h3><i class="fas fa-chart-line"></i> Black Market Prices</h3>
+                    <button class="btn btn-small" onclick="refreshData()">
+                        <i class="fas fa-sync"></i> Refresh
+                    </button>
+                </div>
+                
+                <div class="market-grid" id="market-grid">
+                    <!-- Populated by JS -->
+                </div>
+                
+                <div class="market-info">
+                    <p><i class="fas fa-info-circle"></i> Prices change based on supply and police confiscations</p>
+                </div>
+            </div>
+            
+            <!-- Laundry Tab -->
+            <div id="laundry-tab" class="tab-content hidden">
+                <div class="laundry-header">
+                    <h3><i class="fas fa-money-bill-wave"></i> Money Laundering</h3>
+                </div>
+                
+                <div class="laundry-card">
+                    <div class="laundry-info">
+                        <p>Convert dirty cash into clean bank deposits</p>
+                        <div class="laundry-fee">
+                            <span>Laundering Fee:</span>
+                            <span class="fee-amount">15%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="laundry-form">
+                        <div class="form-group">
+                            <label for="launder-amount">Amount to Launder (¥)</label>
+                            <input type="number" id="launder-amount" placeholder="Min: ¥5,000 | Max: ¥500,000" min="5000" max="500000">
+                        </div>
+                        
+                        <div class="laundry-preview">
+                            <div class="preview-row">
+                                <span>Amount:</span>
+                                <span id="preview-amount">¥0</span>
+                            </div>
+                            <div class="preview-row">
+                                <span>Fee (15%):</span>
+                                <span id="preview-fee">-¥0</span>
+                            </div>
+                            <div class="preview-row total">
+                                <span>You Receive:</span>
+                                <span id="preview-clean">¥0</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-full" onclick="launderMoney()">
+                            <i class="fas fa-exchange-alt"></i> Launder Money
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="laundry-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Warning: Frequent laundering increases your risk level and police attention!</p>
+                </div>
+            </div>
+            
+            <!-- Stats Tab -->
+            <div id="stats-tab" class="tab-content hidden">
+                <div class="stats-header">
+                    <h3><i class="fas fa-chart-bar"></i> Your Criminal Career</h3>
+                </div>
+                
+                <div class="stats-overview">
+                    <div class="stat-card">
+                        <i class="fas fa-dollar-sign"></i>
+                        <div class="stat-value" id="total-earned">¥0</div>
+                        <div class="stat-label">Total Earned</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-building"></i>
+                        <div class="stat-value" id="org-contribution">¥0</div>
+                        <div class="stat-label">Org Contribution</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="stat-value" id="total-activities">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                </div>
+                
+                <div class="stats-breakdown" id="stats-breakdown">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Activity Detail Modal -->
+    <div id="activity-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-activity-name">Activity Name</h2>
+                <button class="close-btn" onclick="closeModal('activity-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-activity-desc" class="activity-desc"></p>
+                
+                <div class="activity-details">
+                    <div class="detail-row">
+                        <span><i class="fas fa-map-marker-alt"></i> Location:</span>
+                        <span id="modal-location">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span><i class="fas fa-users"></i> Required Players:</span>
+                        <span id="modal-players">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span><i class="fas fa-toolbox"></i> Equipment:</span>
+                        <span id="modal-equipment">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span><i class="fas fa-exclamation-triangle"></i> Risk Level:</span>
+                        <span id="modal-risk">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span><i class="fas fa-clock"></i> Cooldown:</span>
+                        <span id="modal-cooldown">-</span>
+                    </div>
+                </div>
+                
+                <div class="reward-preview">
+                    <span>Estimated Reward:</span>
+                    <span id="modal-reward" class="reward-amount">¥0 - ¥0</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('activity-modal')">Cancel</button>
+                <button class="btn btn-primary" id="start-activity-btn" onclick="startSelectedActivity()">
+                    <i class="fas fa-play"></i> Start Activity
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="src/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police MDT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app" class="hidden">
+        <div class="mdt-container">
+            <div class="mdt-header">
+                <div class="mdt-logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Police MDT</span>
+                </div>
+                <div class="mdt-user">
+                    <span id="user-job">Police Department</span>
+                </div>
+                <button class="close-btn" onclick="closeUI()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mdt-body">
+                <div class="mdt-sidebar">
+                    <nav class="mdt-nav">
+                        <button class="nav-btn active" data-tab="dashboard">
+                            <i class="fas fa-home"></i> Dashboard
+                        </button>
+                        <button class="nav-btn" data-tab="cases">
+                            <i class="fas fa-folder"></i> Cases
+                        </button>
+                        <button class="nav-btn" data-tab="lookup">
+                            <i class="fas fa-search"></i> Lookup
+                        </button>
+                        <button class="nav-btn" data-tab="vehicle">
+                            <i class="fas fa-car"></i> Vehicle Check
+                        </button>
+                    </nav>
+                </div>
+                
+                <div class="mdt-content">
+                    <!-- Dashboard Tab -->
+                    <div id="dashboard-tab" class="tab-content active">
+                        <h2><i class="fas fa-home"></i> Dashboard</h2>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <i class="fas fa-folder-open"></i>
+                                <div class="stat-value" id="stat-open">0</div>
+                                <div class="stat-label">Open Cases</div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-gavel"></i>
+                                <div class="stat-value" id="stat-pending">0</div>
+                                <div class="stat-label">Pending Prosecution</div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-check-circle"></i>
+                                <div class="stat-value" id="stat-closed">0</div>
+                                <div class="stat-label">Closed Cases</div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-user"></i>
+                                <div class="stat-value" id="stat-my-cases">0</div>
+                                <div class="stat-label">My Cases</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quick-actions">
+                            <h3>Quick Actions</h3>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" onclick="showCreateCaseModal()">
+                                    <i class="fas fa-plus"></i> New Case
+                                </button>
+                                <button class="btn btn-secondary" onclick="switchTab('lookup')">
+                                    <i class="fas fa-search"></i> Person Lookup
+                                </button>
+                                <button class="btn btn-secondary" onclick="switchTab('vehicle')">
+                                    <i class="fas fa-car"></i> Vehicle Check
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cases Tab -->
+                    <div id="cases-tab" class="tab-content hidden">
+                        <div class="cases-header">
+                            <h2><i class="fas fa-folder"></i> Cases</h2>
+                            <div class="cases-actions">
+                                <select id="case-filter" onchange="filterCases()">
+                                    <option value="all">All Cases</option>
+                                    <option value="open">Open</option>
+                                    <option value="pending_prosecution">Pending Prosecution</option>
+                                    <option value="closed">Closed</option>
+                                    <option value="dismissed">Dismissed</option>
+                                </select>
+                                <button class="btn btn-primary" onclick="showCreateCaseModal()">
+                                    <i class="fas fa-plus"></i> New Case
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="cases-list" id="cases-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Lookup Tab -->
+                    <div id="lookup-tab" class="tab-content hidden">
+                        <h2><i class="fas fa-search"></i> Person Lookup</h2>
+                        
+                        <div class="search-box">
+                            <input type="text" id="person-search" placeholder="Enter name or citizen ID...">
+                            <button class="btn btn-primary" onclick="personLookup()">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                        
+                        <div class="lookup-results" id="lookup-results">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Vehicle Tab -->
+                    <div id="vehicle-tab" class="tab-content hidden">
+                        <h2><i class="fas fa-car"></i> Vehicle Check</h2>
+                        
+                        <div class="search-box">
+                            <input type="text" id="plate-search" placeholder="Enter license plate..." maxlength="8">
+                            <button class="btn btn-primary" onclick="vehicleCheck()">
+                                <i class="fas fa-search"></i> Check
+                            </button>
+                        </div>
+                        
+                        <div class="vehicle-result" id="vehicle-result">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Case Details Panel -->
+                    <div id="case-details-panel" class="details-panel hidden">
+                        <div class="panel-header">
+                            <button class="btn btn-back" onclick="closeCaseDetails()">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <h2 id="case-title">Case Details</h2>
+                            <span id="case-status" class="status-badge">Open</span>
+                        </div>
+                        
+                        <div class="panel-content">
+                            <div class="case-info-grid">
+                                <div class="info-card">
+                                    <h4>Case Information</h4>
+                                    <div class="info-row">
+                                        <span>Case #:</span>
+                                        <span id="case-number">-</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span>Lead Officer:</span>
+                                        <span id="case-officer">-</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span>Prosecutor:</span>
+                                        <span id="case-prosecutor">-</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span>Created:</span>
+                                        <span id="case-created">-</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-card">
+                                    <h4>Description</h4>
+                                    <p id="case-description">-</p>
+                                </div>
+                            </div>
+                            
+                            <div class="case-tabs">
+                                <button class="case-tab-btn active" data-case-tab="persons">
+                                    <i class="fas fa-users"></i> Persons
+                                </button>
+                                <button class="case-tab-btn" data-case-tab="evidence">
+                                    <i class="fas fa-file-alt"></i> Evidence
+                                </button>
+                                <button class="case-tab-btn" data-case-tab="actions">
+                                    <i class="fas fa-gavel"></i> Actions
+                                </button>
+                            </div>
+                            
+                            <div id="persons-case-tab" class="case-tab-content active">
+                                <div class="section-header">
+                                    <h4>Persons Involved</h4>
+                                    <button class="btn btn-small btn-primary" onclick="showAddPersonModal()">
+                                        <i class="fas fa-plus"></i> Add
+                                    </button>
+                                </div>
+                                <div id="case-persons-list" class="persons-list">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+                            
+                            <div id="evidence-case-tab" class="case-tab-content hidden">
+                                <div class="section-header">
+                                    <h4>Evidence</h4>
+                                    <button class="btn btn-small btn-primary" onclick="showAddEvidenceModal()">
+                                        <i class="fas fa-plus"></i> Add
+                                    </button>
+                                </div>
+                                <div id="case-evidence-list" class="evidence-list">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+                            
+                            <div id="actions-case-tab" class="case-tab-content hidden">
+                                <h4>Case Actions</h4>
+                                <div class="action-grid" id="case-action-buttons">
+                                    <!-- Populated by JS based on permissions -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Case Modal -->
+    <div id="create-case-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Case</h2>
+                <button class="close-btn" onclick="closeModal('create-case-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-case-title">Case Title</label>
+                    <input type="text" id="new-case-title" placeholder="Enter case title">
+                </div>
+                <div class="form-group">
+                    <label for="new-case-desc">Description</label>
+                    <textarea id="new-case-desc" placeholder="Enter case description" rows="4"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('create-case-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="createCase()">Create Case</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Person Modal -->
+    <div id="add-person-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Person to Case</h2>
+                <button class="close-btn" onclick="closeModal('add-person-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="person-citizenid">Citizen ID</label>
+                    <input type="text" id="person-citizenid" placeholder="Enter citizen ID">
+                </div>
+                <div class="form-group">
+                    <label for="person-role">Role</label>
+                    <select id="person-role">
+                        <option value="suspect">Suspect</option>
+                        <option value="witness">Witness</option>
+                        <option value="victim">Victim</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="person-notes">Notes</label>
+                    <textarea id="person-notes" placeholder="Additional notes" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('add-person-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="addPerson()">Add Person</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Evidence Modal -->
+    <div id="add-evidence-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Evidence</h2>
+                <button class="close-btn" onclick="closeModal('add-evidence-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="evidence-type">Evidence Type</label>
+                    <select id="evidence-type">
+                        <option value="item">Physical Item</option>
+                        <option value="weapon">Weapon</option>
+                        <option value="photo">Photograph</option>
+                        <option value="audio">Audio Recording</option>
+                        <option value="log">Log/Report</option>
+                        <option value="dna">DNA Sample</option>
+                        <option value="fingerprint">Fingerprint</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="evidence-ref">Reference ID (optional)</label>
+                    <input type="text" id="evidence-ref" placeholder="Item ID, URL, etc.">
+                </div>
+                <div class="form-group">
+                    <label for="evidence-desc">Description</label>
+                    <textarea id="evidence-desc" placeholder="Describe the evidence" rows="4"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('add-evidence-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="addEvidence()">Add Evidence</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sentence Modal -->
+    <div id="sentence-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Issue Sentence</h2>
+                <button class="close-btn" onclick="closeModal('sentence-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="sentence-jail">Jail Time (minutes)</label>
+                    <input type="number" id="sentence-jail" placeholder="0" min="0" max="120">
+                </div>
+                <div class="form-group">
+                    <label for="sentence-fine">Fine (¥)</label>
+                    <input type="number" id="sentence-fine" placeholder="0" min="0" max="500000">
+                </div>
+                <div class="form-group">
+                    <label for="sentence-notes">Notes</label>
+                    <textarea id="sentence-notes" placeholder="Sentence notes" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('sentence-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="sentenceCase()">Issue Sentence</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="src/app.js"></script>
+</body>
+</html>

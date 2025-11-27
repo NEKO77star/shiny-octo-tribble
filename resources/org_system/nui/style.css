@@ -1,0 +1,605 @@
+/* 
+    Resource: org_system
+    File: nui/style.css
+    Purpose: Styles for Organization Management UI
+    
+    Theme: Modern Japan × Mafia
+    Colors: Dark theme with red/gold accents
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: transparent;
+    color: #e0e0e0;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#app {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Container */
+.org-container {
+    width: 800px;
+    max-height: 80vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(139, 69, 69, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.org-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(90deg, #8b4545 0%, #6b3030 100%);
+    border-bottom: 2px solid #d4af37;
+}
+
+.org-header h1 {
+    font-size: 1.5rem;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #d4af37;
+}
+
+/* Views */
+.view {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* No Organization View */
+.no-org-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.no-org-content i {
+    color: #8b4545;
+    margin-bottom: 20px;
+}
+
+.no-org-content h2 {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.no-org-content p {
+    color: #888;
+    margin-bottom: 30px;
+}
+
+/* Tab Bar */
+.tab-bar {
+    display: flex;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(139, 69, 69, 0.3);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 15px;
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.tab-btn:hover {
+    background: rgba(139, 69, 69, 0.2);
+    color: #e0e0e0;
+}
+
+.tab-btn.active {
+    background: rgba(139, 69, 69, 0.3);
+    color: #d4af37;
+    border-bottom: 2px solid #d4af37;
+}
+
+.tab-btn i {
+    margin-right: 8px;
+}
+
+/* Tab Content */
+.tab-content {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+/* Settings Grid */
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.settings-card {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid rgba(139, 69, 69, 0.2);
+}
+
+.settings-card h3 {
+    color: #d4af37;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.settings-card h3 i {
+    margin-right: 8px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.treasury-amount {
+    font-size: 2rem;
+    color: #4caf50;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.treasury-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.accounts-list {
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.account-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.account-balance {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.danger-zone {
+    grid-column: span 2;
+    border-color: rgba(220, 53, 69, 0.3);
+}
+
+.danger-zone h3 {
+    color: #dc3545;
+}
+
+/* Members */
+.members-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.members-header h3 {
+    color: #d4af37;
+}
+
+.members-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.member-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(139, 69, 69, 0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.member-item:hover {
+    background: rgba(139, 69, 69, 0.2);
+    border-color: rgba(139, 69, 69, 0.4);
+}
+
+.member-info-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.member-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8b4545 0%, #6b3030 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.member-details h4 {
+    color: #fff;
+    margin-bottom: 3px;
+}
+
+.member-details span {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.member-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.online-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #888;
+}
+
+.online-indicator.online {
+    background: #4caf50;
+}
+
+/* Territories */
+.territories-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.territories-header h3 {
+    color: #d4af37;
+}
+
+.territories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.territory-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(139, 69, 69, 0.2);
+}
+
+.territory-info h4 {
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.territory-info span {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.territory-bonus {
+    color: #4caf50;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Logs */
+.logs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logs-header h3 {
+    color: #d4af37;
+}
+
+.logs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.log-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.log-action {
+    color: #d4af37;
+}
+
+.log-time {
+    color: #888;
+    font-size: 0.8rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #8b4545 0%, #6b3030 100%);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #9b5555 0%, #7b4040 100%);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+    color: #fff;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #5cb860 0%, #489e4c 100%);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    color: #fff;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #ffa726 0%, #fb8c00 100%);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #e4606d 0%, #d32535 100%);
+}
+
+.btn-small {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge-boss {
+    background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%);
+    color: #000;
+}
+
+.badge-executive {
+    background: linear-gradient(135deg, #8b4545 0%, #6b3030 100%);
+    color: #fff;
+}
+
+.badge-member {
+    background: rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.badge-associate {
+    background: rgba(255, 255, 255, 0.1);
+    color: #888;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    width: 400px;
+    max-width: 90%;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(139, 69, 69, 0.3);
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: linear-gradient(90deg, #8b4545 0%, #6b3030 100%);
+}
+
+.modal-header h2 {
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.member-action-btns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(139, 69, 69, 0.3);
+    border-radius: 6px;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #d4af37;
+}
+
+.form-group select option {
+    background: #1a1a2e;
+    color: #e0e0e0;
+}
+
+.member-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(139, 69, 69, 0.5);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 69, 69, 0.7);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#app:not(.hidden) {
+    animation: fadeIn 0.3s ease;
+}

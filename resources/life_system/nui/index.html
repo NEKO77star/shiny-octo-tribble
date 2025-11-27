@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app" class="hidden">
+        <div class="phone-container">
+            <div class="phone-frame">
+                <div class="phone-notch"></div>
+                
+                <div class="phone-header">
+                    <div class="status-bar">
+                        <span id="current-time">12:00</span>
+                        <div class="status-icons">
+                            <i class="fas fa-signal"></i>
+                            <i class="fas fa-wifi"></i>
+                            <i class="fas fa-battery-full"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="phone-content">
+                    <!-- Home Screen -->
+                    <div id="home-screen" class="screen active">
+                        <div class="app-grid">
+                            <div class="app-icon" onclick="openApp('messages')">
+                                <div class="icon-bg messages"><i class="fas fa-comments"></i></div>
+                                <span>Messages</span>
+                                <div class="notification-badge hidden" id="messages-badge">0</div>
+                            </div>
+                            <div class="app-icon" onclick="openApp('sns')">
+                                <div class="icon-bg sns"><i class="fas fa-share-nodes"></i></div>
+                                <span>SNS</span>
+                            </div>
+                            <div class="app-icon" onclick="openApp('bank')">
+                                <div class="icon-bg bank"><i class="fas fa-university"></i></div>
+                                <span>Bank</span>
+                            </div>
+                            <div class="app-icon" onclick="openApp('contacts')">
+                                <div class="icon-bg contacts"><i class="fas fa-address-book"></i></div>
+                                <span>Contacts</span>
+                            </div>
+                            <div class="app-icon" onclick="openApp('insurance')">
+                                <div class="icon-bg insurance"><i class="fas fa-shield-alt"></i></div>
+                                <span>Insurance</span>
+                            </div>
+                            <div class="app-icon" onclick="openApp('settings')">
+                                <div class="icon-bg settings"><i class="fas fa-cog"></i></div>
+                                <span>Settings</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Messages App -->
+                    <div id="messages-screen" class="screen hidden">
+                        <div class="app-header">
+                            <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
+                            <h2>Messages</h2>
+                            <button class="action-btn" onclick="showNewMessageModal()"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="conversations-list" id="conversations-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Screen -->
+                    <div id="chat-screen" class="screen hidden">
+                        <div class="app-header">
+                            <button class="back-btn" onclick="openApp('messages')"><i class="fas fa-arrow-left"></i></button>
+                            <h2 id="chat-title">Chat</h2>
+                            <div></div>
+                        </div>
+                        <div class="chat-messages" id="chat-messages">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="message-input" placeholder="Type a message...">
+                            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- SNS App -->
+                    <div id="sns-screen" class="screen hidden">
+                        <div class="app-header">
+                            <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
+                            <h2>SNS</h2>
+                            <button class="action-btn" onclick="showNewPostModal()"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="sns-feed" id="sns-feed">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Bank App -->
+                    <div id="bank-screen" class="screen hidden">
+                        <div class="app-header">
+                            <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
+                            <h2>Bank</h2>
+                            <div></div>
+                        </div>
+                        <div class="bank-content">
+                            <div class="balance-card">
+                                <div class="balance-label">Cash</div>
+                                <div class="balance-amount" id="cash-balance">¥0</div>
+                            </div>
+                            <div class="balance-card primary">
+                                <div class="balance-label">Bank Account</div>
+                                <div class="balance-amount" id="bank-balance">¥0</div>
+                            </div>
+                            <div class="hidden-accounts" id="hidden-accounts">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contacts App -->
+                    <div id="contacts-screen" class="screen hidden">
+                        <div class="app-header">
+                            <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
+                            <h2>Contacts</h2>
+                            <button class="action-btn" onclick="showAddContactModal()"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="contacts-list" id="contacts-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Insurance App -->
+                    <div id="insurance-screen" class="screen hidden">
+                        <div class="app-header">
+                            <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
+                            <h2>Insurance</h2>
+                            <div></div>
+                        </div>
+                        <div class="insurance-content">
+                            <div class="insurance-list" id="insurance-list">
+                                <!-- Populated by JS -->
+                            </div>
+                            <button class="btn btn-primary btn-full" onclick="showPurchaseInsuranceModal()">
+                                <i class="fas fa-plus"></i> Purchase Insurance
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings App -->
+                    <div id="settings-screen" class="screen hidden">
+                        <div class="app-header">
+                            <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
+                            <h2>Settings</h2>
+                            <div></div>
+                        </div>
+                        <div class="settings-list">
+                            <div class="settings-item">
+                                <span>Notifications</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-item">
+                                <span>Dark Mode</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-item" onclick="closePhone()">
+                                <span>Close Phone</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="phone-footer">
+                    <div class="home-indicator" onclick="goHome()"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- New Message Modal -->
+    <div id="new-message-modal" class="modal hidden">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3>New Message</h3>
+                <button class="close-btn" onclick="closeModal('new-message-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Recipient Citizen ID</label>
+                    <input type="text" id="new-msg-recipient" placeholder="Enter citizen ID">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea id="new-msg-content" rows="3" placeholder="Type your message..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('new-message-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="sendNewMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- New Post Modal -->
+    <div id="new-post-modal" class="modal hidden">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3>New Post</h3>
+                <button class="close-btn" onclick="closeModal('new-post-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>What's on your mind?</label>
+                    <textarea id="post-content" rows="4" placeholder="Share something..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Visibility</label>
+                    <select id="post-visibility">
+                        <option value="public">Public</option>
+                        <option value="org">Organization Only</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('new-post-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="createPost()">Post</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Contact Modal -->
+    <div id="add-contact-modal" class="modal hidden">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3>Add Contact</h3>
+                <button class="close-btn" onclick="closeModal('add-contact-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Citizen ID</label>
+                    <input type="text" id="contact-citizenid" placeholder="Enter citizen ID">
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="contact-name" placeholder="Enter contact name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('add-contact-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="addContact()">Add</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Purchase Insurance Modal -->
+    <div id="purchase-insurance-modal" class="modal hidden">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3>Purchase Insurance</h3>
+                <button class="close-btn" onclick="closeModal('purchase-insurance-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Insurance Type</label>
+                    <select id="insurance-type">
+                        <option value="vehicle">Vehicle Insurance</option>
+                        <option value="health">Health Insurance</option>
+                        <option value="property">Property Insurance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Target ID (Plate/Property ID/Citizen ID)</label>
+                    <input type="text" id="insurance-target" placeholder="Enter target ID">
+                </div>
+                <div class="form-group">
+                    <label>Premium (¥)</label>
+                    <input type="number" id="insurance-premium" placeholder="Min: ¥200" min="200">
+                </div>
+                <div class="insurance-preview">
+                    <span>Coverage:</span>
+                    <span id="insurance-coverage">¥0</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('purchase-insurance-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="purchaseInsurance()">Purchase</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="src/app.js"></script>
+</body>
+</html>
