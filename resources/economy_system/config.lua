@@ -8,6 +8,13 @@
     - Market settings
     - Risk levels and cooldowns
     - Reward multipliers
+    
+    Special Activity Handlers:
+    - 'laundry': Money laundering activities that convert dirty money to clean money (with fee)
+    - 'pink_slip': Vehicle title racing where winner receives loser's vehicle instead of cash
+    
+    These special handlers are processed in server/main.lua with custom logic
+    instead of standard reward calculation.
 ]]
 
 Config = {}
@@ -567,13 +574,16 @@ Config.Activities = {
         coords = vector3(250.0, -337.0, 44.0),
         requiredPlayers = 2,
         requiredEquipment = {'valuable_vehicle'},
+        -- Note: baseReward is 0 because the reward is the opponent's vehicle title
+        -- The 'special' field 'pink_slip' triggers special handling in the server
+        -- to transfer vehicle ownership instead of cash rewards
         baseRewardMin = 0,
-        baseRewardMax = 0, -- Reward is opponent's vehicle
+        baseRewardMax = 0,
         riskLevel = 8,
         cooldown = 3600,
         commodity = 'vehicle_title',
         supplyAmount = 0,
-        special = 'pink_slip'
+        special = 'pink_slip' -- Special handler: transfers vehicle ownership to winner
     },
     -- Hitman Activities
     {
